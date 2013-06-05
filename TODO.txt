@@ -1,0 +1,24 @@
+TODOS für meine Proseminarfolien
+
+Quellen:
+- Angaben direkt bei jedem Bild [Isilon 2010]
+- Bildtitel im Quellenverzeichnis
+- besserer Screenshot (s. Mail)
+
+Blockgrafiken:
+- Clients einzeln, ein Kabel pro Client
+- InfiniBand einbringen
+- Grafik für Benchmark-Set-Up
+
+Struktur:
+- groben Hardware-Aufbau auf Folie 7
+
+Inhalt:
+- Wie wird Lastausgleich betrieben? DNS-Roundrobin
+- neue Benchmarks (s. Mail)
+- IOPS oder Durchsatz bei Serien
+- alte Benchmarks in Verhältnis setzen
+-- LoadGenerator angeben
+-- Infos lesen (s. Mail)
+-- Grafik des Set-Ups
+- Datenverteilung und Metadatenhandling
