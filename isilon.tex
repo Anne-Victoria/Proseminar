@@ -102,7 +102,7 @@
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{Aufbau}
+  \frametitle{Hardwareaufbau}
   
   \begin{figure}[htp]
     \centering
@@ -114,7 +114,7 @@
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{Aufbau}
+  \frametitle{Schichten}
   
   \begin{figure}[htp]
     \centering
@@ -129,7 +129,7 @@
 \subsection{}
 
   \begin{frame}[fragile]
-  \frametitle{Hardware}
+  \frametitle{Nodes}
   
   \begin{figure}[htp]
     \centering
@@ -141,9 +141,10 @@
   
   \begin{itemize}
     \item Während Onlinebetrieb erweiterbar
-    \item (Nodes aller Reihen können zusammen in einem Dateisystem sein und ein Volume bilden) 
+    \item Nodes aller Reihen in einem Dateisystem vereinbar \\
+    zu virtuellem Volume 
     \vspace{1mm}
-    \item[$\rightarrow$] \textbf{Skalierbarkeit}
+    \item[$\rightarrow$] \textbf{Flexibilität}
     \end{itemize}
 
 \end{frame}
@@ -233,7 +234,7 @@
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{OneFS}
+  \frametitle{Hardwareaufbau und OneFS}
 
   \begin{center}\includegraphics[width=0.7\textwidth]{onefs-neu.pdf}\end{center}
 
@@ -253,7 +254,7 @@
 
   \begin{description}
     \item[Kernel] freeBSD
-    \item[Shell] Z Shell (zsh) + isi-Befehle
+    \item[Shell] Z Shell (zsh) + 'isi'-Befehle
     \item[Version] 7.0
     \item[Protokolle] NFS, SMB/CIFS (default)
     \item[] (HTTP, FTP, HDFS, iSCSI, REST API) 
@@ -283,8 +284,8 @@
   
   \begin{enumerate}
     \item Client sendet Schreibanfrage an Node A (Front-End-Netzwerk)
-    \item Node legt Striping und Sicherung fest
-    \item Node schreibt einen Block in den eigenen Speicher,
+    \item Node A legt Striping und Sicherung fest
+    \item Node A schreibt einen Block in den eigenen Speicher,
     verteilt die weiteren Blöcke auf andere Nodes (Back-End-Netzwerk)
     \end{enumerate}
   
