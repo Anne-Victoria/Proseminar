@@ -64,7 +64,7 @@
 
 \section{Einleitung}
 
-\subsection{}
+\subsection{EMC Isilon}
 \begin{frame}[fragile]
   \frametitle{EMC Isilon}
   %\begin{itemize} 
@@ -129,7 +129,7 @@
 \subsection{}
 
   \begin{frame}[fragile]
-  \frametitle{Aufbau}
+  \frametitle{Hardware}
   
   \begin{figure}[htp]
     \centering
@@ -139,7 +139,7 @@
   
   \vspace{-5mm}
   
-  \begin{itemize} 
+  \begin{itemize}
     \item Während Onlinebetrieb erweiterbar
     \item (Nodes aller Reihen können zusammen in einem Dateisystem sein und ein Volume bilden) 
     \vspace{1mm}
@@ -254,7 +254,7 @@
   \begin{description}
     \item[Kernel] freeBSD
     \item[Shell] Z Shell (zsh) + isi-Befehle
-    \item[Version] 7.0.1
+    \item[Version] 7.0
     \item[Protokolle] NFS, SMB/CIFS (default)
     \item[] (HTTP, FTP, HDFS, iSCSI, REST API) 
 
@@ -264,7 +264,58 @@
 
 \subsection{}
 \begin{frame}[fragile]
+  \frametitle{OneFS (Dateisystem)}
+
+  \begin{description}
+    \item[B-Trees] effiziente Suche
+    \item[Adressierung] \{Node, Platte, Offset\}
+    \item[Journaling] im NVRAM (Non-Volatile Random Access Memory)
+    \item[Striping] erst über alle Nodes, dann ggf. über \\Festplatten innerhalb der Nodes
+    \item[Sicherung] Paritäten, Mirroring individuell einstellbar
+    \item[Metadaten] Speicherung in Inodes, häufig auf SSDs, um Performance zu erhöhen
+  \end{description}
+
+\end{frame}
+
+\subsection{}
+\begin{frame}[fragile]
+  \frametitle{OneFS (Dateisystem) - Das Schreiben einer Datei}
+  
+  \begin{enumerate}
+    \item Client sendet Schreibanfrage an Node A (Front-End-Netzwerk)
+    \item Node legt Striping und Sicherung fest
+    \item Node schreibt einen Block in den eigenen Speicher,
+    verteilt die weiteren Blöcke auf andere Nodes (Back-End-Netzwerk)
+    \end{enumerate}
+  
+  \begin{itemize}
+    \item Daten werden vorerst in NVRAM geschrieben 
+    \item Administrator kann optional aus drei Layouts wählen, \\
+    je nach Zugriffsmuster:
+    \vspace{2mm}
+    \item[$\rightarrow$] Nebenläufigkeit 
+    \item[$\rightarrow$] Streaming
+    \item[$\rightarrow$] Zufall
+        
+  \end{itemize}
+  
+  
+
+\end{frame}
+
+      
+
+\subsection{}
+\begin{frame}[fragile]
   \frametitle{Administration}
+  
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{insightiq.jpg}
+    \caption{[vFokus.no 2012]}
+  \end{figure}
+  
+  \vspace{-5mm}
 
   \begin{itemize}
     \item WebUI
@@ -279,44 +330,57 @@
 \begin{frame}[fragile]
   \frametitle{Tools}
 
-  \vspace{-3mm}
-
-  \begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.6\textwidth]{insightiq.jpg}
-    \caption{[vFokus.no 2012]}
-  \end{figure}
-  
-  \vspace{-5mm}
-
   \begin{description}
-    \item[InsightIQ] Performance monitoring
+    \item[InsightIQ] Performance Monitoring
     \item[SmartPools] Optimierung der Datenverteilung
-    \item[SmartLock] Datenrettung bei unbeabsichtigter Löschung 
-    \item[u.v.m.] 
+    \item[SmartQuotas] Quota Management
+    \item[SmartConnect] Lastverteilung und Failover
+    \item[SnapshotIQ] Backup
+    \item[Isilon for vCenter] Steuerung durch vCenter
+    \item[SyncIQ] Datenvervielfältigung
+    \item[SmartLock] Datenbewahrung
+    \item[Aspera for Isilon] Isilon im Wide Area Network (WAN)
   \end{description}
 
 \end{frame}    
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{Daten}
+  \frametitle{SmartConnect}
+  
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{smartconnect-image.png}
+    \caption{[EMC Corp. 2011]}
+  \end{figure}
 
   \begin{itemize}
-    \item (Datenaufteilung)
+    \item[] 
   \end{itemize}
 
 \end{frame}    
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{Metadaten}
+  \frametitle{Lastverteilung}
 
   \begin{itemize}
-    \item (Metadatenhandling)
+    \item[] SmartConnect \emph{Basic} wird mit OneFS mitgeliefert \\ SmartConnect \emph{Advanced} muss bei Bedarf erworben werden
   \end{itemize}
+  
+  \vspace{3mm}
+  
+  \begin{description}
+    \item[Basic] DNS Round Robin
+    \vspace{3mm}
+    \item[Advanced] CPU Auslastung
+    \item[] Verbindungsanzahl
+    \item[] Durchsatz 
+    \vspace{3mm}
+    \item[] Failover und Failback
+  \end{description}
 
-\end{frame}      
+\end{frame}  
 
 \section{Benchmarks}
 
@@ -393,7 +457,11 @@
   \begin{multicols}{2}
 
     \begin{itemize}
-      \item foobar
+      \item Scale-Out-NAS für Enterprise-Bereich
+      \item Schwerpunkt: Einfachheit, Skalierbarkeit
+      \item effiziente Implementierung
+      \item Transparenz, globaler Namespace
+      \item geringer Administrationsaufwand
     \end{itemize}
 
     \begin{figure}[htp]
@@ -408,22 +476,29 @@
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{Quellen}
+  \frametitle{Quellen (alle zuletzt abgerufen am 07.06.2013)}
 
   \tiny
   \begin{itemize}
     \item http://www.santutorial.com/?cat=11
+    \item http://www.mitwa.org/node/8321
     \item http://arstechnica.com/business/2011/05/isilon-overview/
     \item http://www.enterprisestorageforum.com/storage-hardware/emc-isilon-buyers-guide.html
     \item http://www.hamburgnet.de/products/isilon.html?gclid=CPTLo7\_Ew7cCFajKtAodyxQAhQ
-    \item http://www.theregister.co.uk/2011/04/11/isilon\_s200\_and\_x200/
     \item http://www.scribd.com/doc/131726467/Onefs-Command-Ref-6-5
-    \item http://it.toolbox.com/wiki/index.php/OneFS
     \item http://www.ndm.net/emcstore/isilon/emc-isilon-s-series-platform-node
     \item http://www.ndm.net/emcstore/isilon/emc-isilon-x-series-platform-node
     \item http://www.ndm.net/emcstore/isilon/emc-isilon-nl-series-platform-node
     \item http://www.storagenewsletter.com/news/business/isilon-iq-lightstorm-entertainment
     \item http://www.emc.com/storage/isilon/isilon.htm 
+    \item http://www.layer47.com/downloads/isilon\_whitepaper\_smartconnect.pdf
+    \item http://www.emc.com/collateral/hardware/white-papers/h10719-isilon-onefs-technical-overview-wp.pdf
+    \item http://www.emc.com/collateral/hardware/specification-sheet/h10690-ss-isilon-s-series.pdf
+    \item http://www.emc.com/collateral/software/specification-sheet/h10639-isilon-x-series-ss.pdf
+    \item http://www.emc.com/collateral/software/specification-sheet/h10640-isilon-nl-series-ss.pdf
+    \item http://www.emc.com/collateral/data-sheet/h11231-ss-isilon-perf-acc.pdf
+    \item http://www.emc.com/collateral/hardware/specification-sheet/h10791-isilon-backup-accelerator-ss.pdf
+    \item http://www.emc.com/collateral/software/technical-documentation/h10689-cm-isd-3rdparty-sw.pdf
     
   \end{itemize}
 
@@ -436,42 +511,21 @@
   \tiny
   \begin{itemize}
     \item[\textbf{Foliennr.}] \textbf{Quelle}
-    \item[6] "EMC Isilon scale-out storage solutions, powered by the OneFS operating system, provide users with a broad range of options to meet their specific storage needs." http://www.emc.com/collateral/software/data-sheet/h10541-isilon-scale-out-storage-platform-ds.pdf
-    \item[7] "EMC Isilon Family Fanout" http://farm9.staticflickr.com/8246/8640896526\_31b5274651\_o.jpg
-    \item[8] "EMC Isilon S-Series S200" http://farm9.staticflickr.com/8114/8639792225\_580efbb693\_o.jpg
-    \item[9] "EMC Isilon X-Series X200" http://farm9.staticflickr.com/8395/8640895382\_08f6319600\_o.jpg
-    \item[10] "EMC Isilon NL-Series NL200" http://farm9.staticflickr.com/8379/8639792473\_3f76bd3c2d\_o.jpg 
-    \item[11] "EMC Isilon Performance Accelerator" http://www.emc.com/R1/images/EMC\_Image\_C\_1310616693624\_detail-image-emc-isilon-accelerator-shdw-front-300.jpg
-    \item[16] (ohne Titel) http://vfokus.no/wp-content/uploads/2012/08/IQ.png
-    \item[19] Grafik basierend auf Messergebnissen von:
+    \item[7] "EMC Isilon scale-out storage solutions, powered by the OneFS operating system, provide users with a broad range of options to meet their specific storage needs." http://www.emc.com/collateral/software/data-sheet/h10541-isilon-scale-out-storage-platform-ds.pdf
+    \item[8] "EMC Isilon Family Fanout" http://farm9.staticflickr.com/8246/8640896526\_31b5274651\_o.jpg
+    \item[9] "EMC Isilon S-Series S200" http://farm9.staticflickr.com/8114/8639792225\_580efbb693\_o.jpg
+    \item[10] "EMC Isilon X-Series X200" http://farm9.staticflickr.com/8395/8640895382\_08f6319600\_o.jpg
+    \item[11] "EMC Isilon NL-Series NL200" http://farm9.staticflickr.com/8379/8639792473\_3f76bd3c2d\_o.jpg 
+    \item[12] "EMC Isilon Performance Accelerator" http://www.emc.com/R1/images/EMC\_Image\_C\_1310616693624\_detail-image-emc-isilon-accelerator-shdw-front-300.jpg
+    \item[18] (ohne Titel) http://vfokus.no/wp-content/uploads/2012/08/IQ.png
+    \item[20] (ohne Titel) http://www.layer47.com/downloads/isilon\_whitepaper\_smartconnect.pdf
+    \item[22] Grafik basierend auf Messergebnissen von:
     \item[] http://www.spec.org/sfs2008/results/res2011q2/sfs2008-20110527-00194.html
     \item[] http://www.spec.org/sfs2008/results/res2011q2/sfs2008-20110527-00188.html
     \item[] http://www.spec.org/sfs2008/results/res2011q2/sfs2008-20110527-00185.html
-    \item[21] "EMC Isilon scale-out storage solutions, powered by the OneFS operating system, provide users with a broad range of options to meet their specific storage needs." http://www.emc.com/collateral/software/data-sheet/h10541-isilon-scale-out-storage-platform-ds.pdf 
+    \item[23] "EMC Isilon scale-out storage solutions, powered by the OneFS operating system, provide users with a broad range of options to meet their specific storage needs." http://www.emc.com/collateral/software/data-sheet/h10541-isilon-scale-out-storage-platform-ds.pdf 
   \end{itemize}
   
 \end{frame}
 
-\subsection{}
-\begin{frame}[fragile]
-  \frametitle{Bildquellen}
-
-  \tiny
-  \begin{itemize}
-    \item[\textbf{Foliennr.}] \textbf{Quelle}
-    
-    \item[7] http://farm9.staticflickr.com/8246/8640896526\_31b5274651\_o.jpg
-    \item[8] http://farm9.staticflickr.com/8114/8639792225\_580efbb693\_o.jpg
-    \item[9] http://farm9.staticflickr.com/8395/8640895382\_08f6319600\_o.jpg
-    \item[10] http://farm9.staticflickr.com/8379/8639792473\_3f76bd3c2d\_o.jpg 
-    \item[11] http://www.emc.com/R1/images/EMC\_Image\_C\_1310616693624\_detail-image-emc-isilon-accelerator-shdw-front-300.jpg
-    \item[15] http://vfokus.no/wp-content/uploads/2012/08/IQ.png
-    \item[18] Grafik basierend auf Messergebnissen von:
-    \item[] http://www.spec.org/sfs2008/results/res2011q2/sfs2008-20110527-00194.html
-    \item[] http://www.spec.org/sfs2008/results/res2011q2/sfs2008-20110527-00188.html
-    \item[] http://www.spec.org/sfs2008/results/res2011q2/sfs2008-20110527-00185.html
-    \item[20] http://www.emc.com/collateral/software/data-sheet/h10541-isilon-scale-out-storage-platform-ds.pdf 
-  \end{itemize}
-  
-\end{frame}
 \end{document}

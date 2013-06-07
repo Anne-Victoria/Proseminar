@@ -1,24 +1,12 @@
-TODOS für meine Proseminarfolien
-
-Quellen:
-???- besserer Screenshot (s. Mail)
-
 Blockgrafiken:
 - Grafik für Benchmark-Set-Up
-
 Struktur:
-- groben Hardware-Aufbau auf Folie 7
 - Überschriften überarbeiten
 - stimmen die Seitenzahlangaben bei den Bildquellen noch?
-
 Inhalt:
-- Wie wird Lastausgleich betrieben? DNS-Roundrobin
 ???- neue Benchmarks (s. Mail)
 ???- IOPS oder Durchsatz bei Serien
 - alte Benchmarks in Verhältnis setzen
 -- LoadGenerator angeben
 -- Infos lesen (s. Mail)
 ?-- Grafik des Set-Ups
-- Datenverteilung und Metadatenhandling
-- Zusammenfassung am Ende
-- mehr Tools angeben?
