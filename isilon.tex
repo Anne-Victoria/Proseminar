@@ -270,8 +270,8 @@
   \begin{description}
     \item[B-Trees] effiziente Suche
     \item[Adressierung] \{Node, Platte, Offset\}
-    \item[Journaling] im NVRAM (Non-Volatile Random Access Memory)
     \item[Striping] erst über alle Nodes, dann ggf. über \\Festplatten innerhalb der Nodes
+    \item[Journaling] im NVRAM (Non-Volatile Random Access Memory)
     \item[Sicherung] Paritäten, Mirroring individuell einstellbar
     \item[Metadaten] Speicherung in Inodes, häufig auf SSDs, um Performance zu erhöhen
   \end{description}
@@ -387,13 +387,13 @@
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{Benchmarks CIFS}
+  \frametitle{SPECsfs2008\_cifs Benchmarks}
 
   \begin{tikzpicture}
   \begin{axis}
   [
-    xlabel=Throughput (ops/sec),
-    ylabel=Response (msec),
+    xlabel=Durchsatz (ops/sec),
+    ylabel=Antwortzeit (msec),
     ymax=12,
     width=\textwidth,
     height=0.6\textwidth
@@ -461,8 +461,7 @@
       \item Scale-Out-NAS für Enterprise-Bereich
       \item Schwerpunkt: Einfachheit, Skalierbarkeit
       \item effiziente Implementierung
-      \item Transparenz, globaler Namespace
-      \item geringer Administrationsaufwand
+      
     \end{itemize}
 
     \begin{figure}[htp]
@@ -507,7 +506,7 @@
 
 \subsection{}
 \begin{frame}[fragile]
-  \frametitle{Bildquellen}
+  \frametitle{Bildquellen (alle zuletzt abgerufen am 07.06.2013)}
 
   \tiny
   \begin{itemize}
